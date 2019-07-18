@@ -3,14 +3,15 @@
 
   define("PROTOCAL", isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] === "on" ? "https" : "http");
   define("CURRENT_URL", urldecode(PROTOCAL . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"));
-  define("RELATIONAL_BASE_URL", defined("BASE_URL") ? BASE_URL : ROOT_PATH);
+  define("BASE_URL", defined("ROOT_URL") ? ROOT_URL . "erp/" : "");
+  define("RELATIONAL_BASE_URL", defined("ROOT_URL") ? ROOT_URL . "erp/" : ROOT_PATH);
 
   $isErrorPage = strpos(CURRENT_URL, "error.php") === strlen(CURRENT_URL) - strlen("error.php");
 
   if (!$isErrorPage) {
     unset($_SESSION["error"]);
 
-    if (!defined("BASE_URL")) {
+    if (!defined("ROOT_URL")) {
       sendErrorPage(array(
         title => "Missing configuration file",
         content => "
@@ -19,7 +20,7 @@
           <pre>includes/php/config.php</pre>
           Note: Please make sure the followings are set:
           <ul>
-            <li><code>BASE_URL</code></li>
+            <li><code>ROOT_URL</code></li>
             <li><code>MYSQL_HOST</code></li>
             <li><code>MYSQL_USER</code></li>
             <li><code>MYSQL_PASSWORD</code></li>

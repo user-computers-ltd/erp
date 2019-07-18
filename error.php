@@ -33,7 +33,6 @@
         margin: auto;
         max-width: 400px;
         line-height: 24px;
-        text-align: center;
       }
 
       .retry-link {

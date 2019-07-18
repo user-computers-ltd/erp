@@ -1,5 +1,5 @@
 <?php
-  define("ROOT_PATH", "../");
+  define("ROOT_PATH", "../../");
   define("ADMIN_PATH", ROOT_PATH . "admin/");
 
   include_once ROOT_PATH . "includes/php/config.php";

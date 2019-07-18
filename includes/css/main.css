@@ -101,7 +101,7 @@ table.gridline th {
 .page-wrapper .page {
   display: block;
   margin: 0px auto;
-  padding: 40px 80px;
+  padding: 20px;
   width: 800px;
   max-width: 100%;
   background-color: #ffffff;
@@ -254,12 +254,6 @@ table.gridline th {
 
 .sortable .sort-column.sorted-desc::after {
   border-bottom: 4px solid black;
-}
-
-@media (max-width: 768px) {
-  .page-wrapper .page {
-    padding: 20px;
-  }
 }
 
 @media print {
