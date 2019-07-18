@@ -1,0 +1,55 @@
+.database-query {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #c0c0c0;
+}
+
+.database-query textarea {
+  padding: 5px;
+  margin-bottom: 10px;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100px;
+  box-sizing: border-box;
+}
+
+.database-query-results {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.database-query-results {
+  margin: 10px 0px;
+  width: 100%;
+  font-size: 13px;
+  overflow: auto;
+}
+
+.database-query-results table {
+  min-width: 100%;
+}
+
+.database-table {
+  margin: 20px 0px;
+  padding: 0px;
+  width: 100%;
+}
+
+.database-table tr td {
+  padding: 5px;
+  border-top: 1px solid #c0c0c0;
+}
+
+.database-table tr:first-child td {
+  border-top: 0px;
+}
+
+.database-table tr td.table-count {
+  font-size: 13px;
+  text-align: right;
+}
+
+.database-table tr td.table-buttons {
+  text-align: right;
+}

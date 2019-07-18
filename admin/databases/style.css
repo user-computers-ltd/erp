@@ -1,0 +1,23 @@
+.databases-table {
+  margin: 20px 0px;
+  padding: 0px;
+  width: 100%;
+}
+
+.databases-table tr td {
+  padding: 5px;
+  border-top: 1px solid #c0c0c0;
+}
+
+.databases-table tr:first-child td {
+  border-top: 0px;
+}
+
+.databases-table tr td.database-count {
+  font-size: 13px;
+  text-align: right;
+}
+
+.databases-table tr td.database-buttons {
+  text-align: right;
+}

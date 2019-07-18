@@ -1,2 +1,3 @@
 # erp
-An ERP (Enterprise Resource Planning) solution in PHP
+
+A framework to facilitate ERP (Enterprise Resource Planning) solutions

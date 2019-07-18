@@ -1,0 +1,130 @@
+.table-tab {
+  max-width: 500px;
+  margin: auto;
+  margin-bottom: 20px;
+  border: 2px solid darkgray;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.table-tab .tab {
+  display: inline-block;
+  padding: 10px 0px;
+  width: 50%;
+  text-align: center;
+  box-sizing: border-box;
+  background-color: white;
+  cursor: pointer;
+}
+
+.table-tab > .tab.active {
+  background-color: darkgray;
+  color: white;
+  font-weight: bold;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.show {
+  display: block;
+}
+
+.table-query {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #c0c0c0;
+}
+
+.table-query textarea {
+  padding: 5px;
+  margin-bottom: 10px;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100px;
+  box-sizing: border-box;
+}
+
+.table-query-result-header {
+  font-size: 13px;
+}
+
+.table-query-result-header .table-query-result-count {
+  margin-right: 20px;
+}
+
+.table-query-result-header .table-query-result-count,
+.table-query-result-header .table-query-result-settings {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.table-query-result-header .table-query-result-settings button,
+.table-query-result-header .table-query-result-settings select,
+.table-query-result-header .table-query-result-settings span {
+  padding: 5px;
+  vertical-align: middle;
+}
+
+.table-query-result-header .table-query-result-settings button,
+.table-query-result-header .table-query-result-settings span {
+  display: inline-block;
+  margin: 0px 5px;
+  line-height: 12px;
+}
+
+.table-query-result-header .table-query-result-settings select {
+  margin-left: 10px;
+}
+
+.table-query-result-header .table-query-result-export {
+  float: right;
+}
+
+.table-query-results-wrapper,
+.table-structure-results-wrapper {
+  margin: 20px 0px;
+  width: 100%;
+  max-height: calc(100vh - 80px);
+  padding-bottom: 60px;
+  box-sizing: border-box;
+  font-size: 13px;
+  overflow: auto;
+}
+
+.table-query-results,
+.table-structure-results {
+  width: 100%;
+  font-size: 13px;
+  overflow: auto;
+}
+
+.table-query-results table,
+.table-structure-results table {
+  min-width: 100%;
+}
+
+.table-table {
+  margin: 20px 0px;
+  padding: 0px;
+  width: 100%;
+}
+
+.table-table tr td {
+  padding: 5px;
+  border-top: 1px solid #c0c0c0;
+}
+
+.table-table tr:first-child td {
+  border-top: 0px;
+}
+
+.table-table tr td.table-count {
+  font-size: 13px;
+  text-align: right;
+}
+
+.table-table tr td.table-buttons {
+  text-align: right;
+}
