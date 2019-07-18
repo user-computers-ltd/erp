@@ -80,29 +80,42 @@
             <?php endif ?>
           </div>
           <div class="tab-content table-structure">
-            <div class="table-structure-results-wrapper">
-              <table class="table-structure-results gridline sticky-head">
-                <thead>
-                  <tr>
-                    <?php if (count($columns) > 0) : ?>
+            <?php if (count($columns) > 0) : ?>
+              <div class="table-structure-results-wrapper">
+                <table class="table-structure-results gridline sticky-head">
+                  <colgroup>
+                    <?php foreach ($columns[0] as $key => $value) : ?>
+                      <col>
+                    <?php endforeach ?>
+                    <col style="width: 30px">
+                  </colgroup>
+                  <thead>
+                    <tr>
                       <?php foreach ($columns[0] as $key => $value) : ?>
                         <th><?php echo $key; ?></th>
                       <?php endforeach ?>
-                    <?php endif ?>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php foreach ($columns as &$column) : ?>
-                    <tr>
-                      <?php echo implode(array_map(function ($c) { return "<td>$c</td>"; }, $column)); ?>
+                      <th></th>
                     </tr>
-                  <?php endforeach ?>
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($columns as &$column) : ?>
+                      <tr>
+                        <?php echo implode(array_map(function ($c) { return "<td>$c</td>"; }, $column)); ?>
+                        <td>
+                          <div class="remove" onclick="deleteColumn('<?php echo $column["field"]; ?>')">&times;</div>
+                        </td>
+                      </tr>
+                    <?php endforeach ?>
+                  </tbody>
+                </table>
+              </div>
+            <?php else : ?>
+              <div class="no-results">No columns</div>
+            <?php endif ?>
           </div>
           <script>
             var database = "<?php echo $database; ?>";
+            var table = "<?php echo $table; ?>";
             var sql = "<?php echo preg_replace("/\"/", "\\\"", $sql); ?>";
             var apiURL = "<?php echo ADMIN_URL; ?>includes/php/api.php";
           </script>

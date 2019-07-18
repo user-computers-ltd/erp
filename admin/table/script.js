@@ -26,3 +26,29 @@ function exportResults() {
     }
   });
 }
+
+function deleteColumn(column) {
+  showConfirmDialog({
+    message:
+      "Are you sure you want to delete column `" +
+      column +
+      "` from `" +
+      table +
+      "`?",
+    submit: "delete",
+    callback: function() {
+      sendPostRequest({
+        url: apiURL,
+        loadingMessage:
+          "Deleting column `" + column + "` from `" + table + "`...",
+        reloadPage: true,
+        data: {
+          action: "delete-column",
+          database: database,
+          table: table,
+          column: column
+        }
+      });
+    }
+  });
+}
