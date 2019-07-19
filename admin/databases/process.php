@@ -8,9 +8,11 @@
   define("ADMIN_URL", BASE_URL . "admin/");
   define("ADMIN_DATABASE_URL", ADMIN_URL . "database/");
 
-  $systems = array_map(function ($i) { return $i["name"]; }, listDirectory(ROOT_PATH . "systems"));
+  $systems = listSystemNames();
   $databases = listDatabases();
-  $systemDatabases = array_filter($systems, function ($i) use ($databases) { return !in_array($i, $databases); });
+  $systemDatabases = array_filter($systems, function ($i) use ($databases) {
+    return !in_array($i, $databases);
+  });
 
   $databaseMap = array();
 

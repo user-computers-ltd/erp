@@ -9,6 +9,7 @@
     <?php include_once ROOT_PATH . "includes/components/confirm-dialog.php"; ?>
     <?php include_once ROOT_PATH . "includes/components/prompt-dialog.php"; ?>
     <?php include_once ROOT_PATH . "includes/components/message-dialog.php"; ?>
+    <?php include_once ROOT_PATH . "includes/components/import-csv-table-dialog.php"; ?>
     <?php include_once ROOT_PATH . "includes/components/request-loader.php"; ?>
     <div class="page-wrapper">
       <div class="page landscape">
@@ -26,6 +27,31 @@
             <form class="table-query" method="post">
               <textarea name="sql"><?php echo $sql; ?></textarea>
               <button type="submit">execute statement</button>
+              <div class="table-buttons">
+                <?php if ($isSystemTable) : ?>
+                  <div class="image-button restart-image tooltip" onclick="restartTable('<?php echo $table; ?>', true)">
+                    <span class="tooltip-text">Restart `<?php echo $table; ?>` from system settings</span>
+                  </div>
+                <?php endif ?>
+                <div class="image-button clear-import-image tooltip" onclick="clearImportTable('<?php echo $table; ?>', <?php echo $columns; ?>)">
+                  <span class="tooltip-text">Remove data & import CSV to `<?php echo $table; ?>`</span>
+                </div>
+                <div class="image-button import-image tooltip" onclick="importTable('<?php echo $table; ?>', <?php echo $columns; ?>)">
+                  <span class="tooltip-text">Import CSV to `<?php echo $table; ?>`</span>
+                </div>
+                <div class="image-button export-image tooltip" onclick="exportTable('<?php echo $table; ?>')">
+                  <span class="tooltip-text">Export CSV from `<?php echo $table; ?>`</span>
+                </div>
+                <div class="image-button copy-image tooltip" onclick="copyTable('<?php echo $table; ?>')">
+                  <span class="tooltip-text">Copy `<?php echo $table; ?>`</span>
+                </div>
+                <div class="image-button clear-image tooltip" onclick="clearTable('<?php echo $table; ?>')">
+                  <span class="tooltip-text">Remove data from `<?php echo $table; ?>`</span>
+                </div>
+                <div class="image-button delete-image tooltip" onclick="deleteTable('<?php echo $table; ?>')">
+                  <span class="tooltip-text">Delete `<?php echo $table; ?>`</span>
+                </div>
+              </div>
             </form>
             <?php if ($resultCount > 0) : ?>
               <div class="table-query-result-header">

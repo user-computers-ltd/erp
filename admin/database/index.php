@@ -27,7 +27,7 @@
               <col style="width: 100px">
               <col style="width: 210px">
             </colgroup>
-            <?php foreach ($systemTables as &$table) : ?>
+            <?php foreach ($nonExistSystemTables as &$table) : ?>
               <tr>
                 <td><a href="<?php echo ADMIN_TABLE_URL . "?database=$database&table=$table"; ?>"><?php echo $table; ?></a></td>
                 <td></td>
@@ -43,12 +43,13 @@
                 $name = $table["name"];
                 $count = $table["count"];
                 $columns = str_replace("\"", "'", json_encode($table["columns"]));
+                $isSystemTable = in_array($name, $systemTables);
               ?>
               <tr>
                 <td><a href="<?php echo ADMIN_TABLE_URL . "?database=$database&table=$name"; ?>"><?php echo $name; ?></a></td>
                 <td class="table-count"><?php echo $count; ?> rows</td>
                 <td class="table-buttons">
-                  <?php if (in_array($database, $systems)) : ?>
+                  <?php if ($isSystemTable) : ?>
                     <div class="image-button restart-image tooltip" onclick="restartTable('<?php echo $name; ?>', true)">
                       <span class="tooltip-text">Restart `<?php echo $name; ?>` from system settings</span>
                     </div>

@@ -46,17 +46,18 @@
   box-sizing: border-box;
 }
 
-.table-query-result-header {
-  font-size: 13px;
+.table-query .table-buttons {
+  float: right;
 }
 
-.table-query-result-header .table-query-result-count {
-  margin-right: 20px;
+.table-query-result-header {
+  font-size: 13px;
 }
 
 .table-query-result-header .table-query-result-count,
 .table-query-result-header .table-query-result-settings {
   display: inline-block;
+  margin-right: 20px;
   vertical-align: middle;
 }
 
@@ -110,7 +111,17 @@ table.table-structure-results tr th:last-child {
 
 table.table-structure-results tr td .remove {
   text-align: center;
-  font-weight: bold;
+  font-size: 21px;
+  line-height: 16px;
   color: #dd0000;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .table-query-result-header .table-query-result-export,
+  .table-query .table-buttons {
+    display: block;
+    margin-top: 10px;
+    float: none;
+  }
 }

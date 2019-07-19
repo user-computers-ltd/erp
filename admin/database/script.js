@@ -134,7 +134,7 @@ function clearImportTable(table, columns) {
   });
 }
 
-function importTable(table) {
+function importTable(table, columns) {
   importTableFromCSV(table, columns, "import-table");
 }
 

@@ -7,7 +7,8 @@
 <script id="file-selector-script">
   var fileSelector = document.querySelector("#file-selector");
 
-  function selectFile({ multiple = false, callback }) {
+  function selectFile({ multiple = false, accept = "", callback }) {
+    fileSelector.accept = accept;
     fileSelector.multiple = multiple;
     fileSelector.onchange = function (event) {
       if (event.target && event.target.files) {

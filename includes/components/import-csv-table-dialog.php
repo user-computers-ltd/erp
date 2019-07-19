@@ -1,5 +1,6 @@
 <?php
   include_once ROOT_PATH . "includes/components/dialog.php";
+  include_once ROOT_PATH . "includes/components/message-dialog.php";
   include_once ROOT_PATH . "includes/components/file-selector.php";
 ?>
 <style id="import-csv-table-dialog-style">
@@ -119,60 +120,65 @@
     onCancel = function() {}
   }) {
     if (file) {
-      readCSVFile(file, function(data) {
-        var content = importCSVForm.cloneNode(true);
+      if (file.name.endsWith(".csv")) {
+        readCSVFile(file, function(data) {
+          var content = importCSVForm.cloneNode(true);
 
-        if (data.columns.length > 0 && data.count > 0) {
-          var fullyMatched = true;
+          if (data.columns.length > 0 && data.count > 0) {
+            var fullyMatched = true;
 
-          content.querySelector(".import-csv-file-name").innerHTML = file.name;
-          content.querySelector(".import-csv-column-count").innerHTML = data.columns.length + " columns";
-          content.querySelector(".import-csv-row-count").innerHTML = data.count + " rows";
-          content.querySelector(".import-csv-table thead").innerHTML = generateTableHeaderHTML([data.columns]);
-          content.querySelector(".import-csv-table tbody").innerHTML = generateTableBodyHTML(data.columns, data.samples);
-          content.querySelector(".import-database-table-name").innerHTML = table;
-          content.querySelector(".import-database-table thead").innerHTML = generateTableHeaderHTML([
-            columns,
-            columns.map(function(c) {
-              fullyMatched = fullyMatched && data.columns.indexOf(c) !== -1;
+            content.querySelector(".import-csv-file-name").innerHTML = file.name;
+            content.querySelector(".import-csv-column-count").innerHTML = data.columns.length + " columns";
+            content.querySelector(".import-csv-row-count").innerHTML = data.count + " rows";
+            content.querySelector(".import-csv-table thead").innerHTML = generateTableHeaderHTML([data.columns]);
+            content.querySelector(".import-csv-table tbody").innerHTML = generateTableBodyHTML(data.columns, data.samples);
+            content.querySelector(".import-database-table-name").innerHTML = table;
+            content.querySelector(".import-database-table thead").innerHTML = generateTableHeaderHTML([
+              columns,
+              columns.map(function(c) {
+                fullyMatched = fullyMatched && data.columns.indexOf(c) !== -1;
 
-              return "<textarea "
-                + "name=\"" + c + "\""
-                + "oninput=\"handleColumnInput(event, '" + c + "')\" "
-              + ">"
-                + (data.columns.indexOf(c) !== -1 ? "`" + c + "`" : "")
-              + "</textarea>";
-            })
-          ]);
-          content.querySelector(".import-database-table tbody").innerHTML = generateTableBodyHTML(
-            columns,
-            data.samples.map(function(s) {
-              return columns.map(function(c) {
-                return data.columns.indexOf(c) !== -1 ? s[data.columns.indexOf(c)] : "";
-              });
-            })
-          );
-          content.querySelector(".cancel-button").innerHTML = cancel;
-          content.querySelector(".cancel-button").addEventListener("click", hideDialog);
-          content.querySelector(".submit-button").innerHTML = submit;
-          content.addEventListener("submit", function(event) {
-            event.preventDefault();
-            callback(serialize(this, false), file);
-            hideDialog();
-            return false;
-          });
+                return "<textarea "
+                  + "name=\"" + c + "\""
+                  + "oninput=\"handleColumnInput(event, '" + c + "')\" "
+                + ">"
+                  + (data.columns.indexOf(c) !== -1 ? "`" + c + "`" : "")
+                + "</textarea>";
+              })
+            ]);
+            content.querySelector(".import-database-table tbody").innerHTML = generateTableBodyHTML(
+              columns,
+              data.samples.map(function(s) {
+                return columns.map(function(c) {
+                  return data.columns.indexOf(c) !== -1 ? s[data.columns.indexOf(c)] : "";
+                });
+              })
+            );
+            content.querySelector(".cancel-button").innerHTML = cancel;
+            content.querySelector(".cancel-button").addEventListener("click", hideDialog);
+            content.querySelector(".submit-button").innerHTML = submit;
+            content.addEventListener("submit", function(event) {
+              event.preventDefault();
+              callback(serialize(this, false), file);
+              hideDialog();
+              return false;
+            });
 
-          if (autoSubmit && fullyMatched) {
-            callback(serialize(content, false), file);
+            if (autoSubmit && fullyMatched) {
+              callback(serialize(content, false), file);
+            } else {
+              showDialog({ content, fullCover: true, onCancel });
+            }
           } else {
-            showDialog({ content, fullCover: true, onCancel });
+            callback(serialize(content, false), file);
           }
-        } else {
-          callback(serialize(content, false), file);
-        }
-      });
+        });
+      } else {
+        showMessageDialog({ message: "Please select a CSV file.", callback: onCancel });
+      }
     } else {
       selectFile({
+        accept: ".csv",
         callback: function (files) {
           showImportCSVTableDialog({ file: files[0], table, columns, submit, autoSubmit, callback, onCancel });
         }

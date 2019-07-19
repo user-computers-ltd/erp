@@ -61,7 +61,7 @@
   function exportDatabase($database) {
     $tables = array_map(function ($i) { return $i["name"]; }, listTables($database));
 
-    $filename = "export.zip";
+    $filename = "$database.zip";
     $path = TEMP_DIRECTORY . $filename;
     $zip = new ZipArchive;
     $zip->open($path, ZipArchive::CREATE);

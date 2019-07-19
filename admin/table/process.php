@@ -22,6 +22,8 @@
 
   if ($databaseFound && $tableFound) {
     $columns = listColumns($database, $table);
+    $isSystemDatabase = in_array($database, listSystemNames());
+    $isSystemTable = in_array($table, listSystemTables($database));
 
     try {
       selectDatabase($database);

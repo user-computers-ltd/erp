@@ -14,13 +14,13 @@
   $databaseFound = in_array($database, listDatabases());
 
   if ($databaseFound) {
-    $systems = array_map(function ($i) { return $i["name"]; }, listDirectory(ROOT_PATH . "systems"));
+    $isSystemDatabase = in_array($database, listSystemNames());
 
     $tables = listTables($database);
-    $systemTables = array_filter(array_map(function ($table) {
-      return str_replace(".sql", "", $table);
-    }, listFile(ROOT_PATH . "systems/$database/data-model/tables")), function ($i) use ($tables) {
-      return !in_array($i, array_map(function ($j) { return $j["name"]; }, $tables));
+    $systemTables = listSystemTables($database);
+    $tableNames = array_map(function ($j) { return $j["name"]; }, $tables);
+    $nonExistSystemTables = array_filter($systemTables, function ($i) use ($tableNames) {
+      return !in_array($i, $tableNames);
     });
   }
 
