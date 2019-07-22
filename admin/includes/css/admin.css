@@ -4,7 +4,9 @@ body {
 }
 
 .logout-form {
+  margin-left: 10px;
   text-align: right;
+  float: right;
 }
 
 .breadcrumb {

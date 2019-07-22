@@ -22,7 +22,7 @@
             <col style="width: 100px">
             <col style="width: 210px">
           </colgroup>
-          <?php foreach ($systemDatabases as &$database) : ?>
+          <?php foreach ($nonExistSystemDatabases as &$database) : ?>
             <tr>
               <td><a href="<?php echo ADMIN_DATABASE_URL . "?database=$database"; ?>"><?php echo $database; ?></a></td>
               <td></td>
@@ -36,9 +36,11 @@
           <?php foreach ($databases as &$database) : ?>
             <tr>
               <td><a href="<?php echo ADMIN_DATABASE_URL . "?database=$database"; ?>"><?php echo $database; ?></a></td>
-              <td class="database-count"><?php echo count($databaseMap[$database]); ?> tables</td>
+              <td class="database-count">
+                <?php echo count($databaseMap[$database]); ?> table<?php echo count($databaseMap[$database]) > 1 ? "s" : ""; ?>
+              </td>
               <td class="database-buttons">
-                <?php if (in_array($database, $systems)) : ?>
+                <?php if (in_array($database, $systemDatabases)) : ?>
                   <div class="image-button restart-image tooltip" onclick="restartDatabase('<?php echo $database; ?>', true)">
                     <span class="tooltip-text">Restart `<?php echo $database; ?>` from system settings</span>
                   </div>

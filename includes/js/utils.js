@@ -136,64 +136,6 @@ function toggleClass(element, className, toggle) {
   element.className = classes.join(" ");
 }
 
-function toHTMLString(node) {
-  var htmlString = "";
-
-  switch (node.element) {
-    case "input":
-      htmlString +=
-        "<input " +
-        (node.type ? 'type="' + node.type + '" ' : "") +
-        (node.name ? 'name="' + node.name + '" ' : "") +
-        (node.value ? 'value="' + node.value + '" ' : "") +
-        (node.placeholder ? 'placeholder="' + node.placeholder + '"' : "") +
-        (node.readonly ? "readonly " : "") +
-        (node.required ? "required " : "") +
-        "/>";
-      break;
-    case "select":
-      htmlString +=
-        "<select " +
-        (node.name ? 'name="' + node.name + '" ' : "") +
-        (node.value ? 'value="' + node.value + '" ' : "") +
-        (node.readonly ? "readonly " : "") +
-        (node.required ? "required " : "") +
-        "/>";
-
-      if (node.options) {
-        for (var j = 0; j < node.options.length; j++) {
-          var option = node.options[j];
-          htmlString +=
-            "<option " +
-            (option.value ? 'value="' + option.value + '" ' : "") +
-            (option.value === node.value ? "selected " : "") +
-            (option.hidden ? "hidden " : "") +
-            (option.disabled ? "disabled " : "") +
-            ">" +
-            option.value +
-            "</option>";
-        }
-      }
-
-      htmlString += "</select>";
-      break;
-    case "textarea":
-      htmlString +=
-        "<textarea " +
-        (node.name ? 'name="' + node.name + '" ' : "") +
-        (node.readonly ? "readonly " : "") +
-        (node.required ? "required " : "") +
-        "/>" +
-        node.value +
-        "</textarea>";
-      break;
-    default:
-      break;
-  }
-
-  return htmlString;
-}
-
 function serialize(form, toString = true) {
   if (!form || form.nodeName !== "FORM") {
     return;

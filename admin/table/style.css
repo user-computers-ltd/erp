@@ -85,10 +85,9 @@
 
 .table-query-results-wrapper,
 .table-structure-results-wrapper {
-  margin: 20px 0px;
+  margin-top: 20px;
   width: 100%;
-  max-height: calc(100vh - 80px);
-  padding-bottom: 60px;
+  max-height: calc(100vh - 60px);
   box-sizing: border-box;
   font-size: 13px;
   overflow: auto;

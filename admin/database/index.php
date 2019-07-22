@@ -47,7 +47,7 @@
               ?>
               <tr>
                 <td><a href="<?php echo ADMIN_TABLE_URL . "?database=$database&table=$name"; ?>"><?php echo $name; ?></a></td>
-                <td class="table-count"><?php echo $count; ?> rows</td>
+                <td class="table-count"><?php echo $count; ?> row<?php echo $count > 1 ? "s" : ""; ?></td>
                 <td class="table-buttons">
                   <?php if ($isSystemTable) : ?>
                     <div class="image-button restart-image tooltip" onclick="restartTable('<?php echo $name; ?>', true)">

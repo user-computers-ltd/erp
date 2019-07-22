@@ -1,7 +1,6 @@
 <?php
   include_once "config.php";
 
-  define("SYSTEMS_PATH", ROOT_PATH . "systems/");
   define("PROTOCAL", isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] === "on" ? "https" : "http");
   define("CURRENT_URL", urldecode(PROTOCAL . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"));
   define("BASE_URL", defined("ROOT_URL") ? ROOT_URL . "erp/" : "");
@@ -134,16 +133,6 @@
     }
 
     return $files;
-  }
-
-  function listSystemNames() {
-    return listDirectoryNames(SYSTEMS_PATH);
-  }
-
-  function listSystemTables($system) {
-    return array_map(function ($f) {
-      return str_replace(".sql", "", $f);
-    }, listFile(ROOT_PATH . "systems/$system/data-model/tables"));
   }
 
   function getURLParentLocation() {

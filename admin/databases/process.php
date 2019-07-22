@@ -8,9 +8,9 @@
   define("ADMIN_URL", BASE_URL . "admin/");
   define("ADMIN_DATABASE_URL", ADMIN_URL . "database/");
 
-  $systems = listSystemNames();
   $databases = listDatabases();
-  $systemDatabases = array_filter($systems, function ($i) use ($databases) {
+  $systemDatabases = array_map(function ($s) { return $s["name"]; }, listSystems());
+  $nonExistSystemDatabases = array_filter($systemDatabases, function ($i) use ($databases) {
     return !in_array($i, $databases);
   });
 
@@ -25,7 +25,7 @@
   }
 
   $breadcrumbs = array(
-    array("url" => BASE_URL, "label" => "Systems"),
+    array("url" => BASE_URL, "label" => "Main"),
     array("url" => ADMIN_URL, "label" => "Admin")
   );
 ?>

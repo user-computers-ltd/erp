@@ -2,20 +2,29 @@
   include_once ROOT_PATH . "includes/php/utils.php";
   include_once ROOT_PATH . "includes/php/database.php";
 
-  function getColumnString($column) {
-    $field = $column["field"];
-    $type = $column["type"];
-    $length = !empty($column["length"]) ? "(" . $column["length"] . ")" : "";
-    $extra = !empty($column["extra"]) ? " " . $column["extra"] : "";
+  define("SYSTEMS_PATH", ROOT_PATH . "systems/");
 
-    return "$field $type$length$extra";
+  function listSystems() {
+    return array_map(function ($directory) {
+      $settings = json_decode(file_get_contents(getSystemSettingsFilePath($directory)), true);
+
+      $settings["name"] = $directory;
+      $settings["backups"] = array_filter(listDatabases(), function ($d) use ($directory) {
+        return preg_match("/" . $directory . "_backup_[0-9]{14}/", $d);
+      });
+      $settings["tables"] = array_map(function ($f) {
+        return str_replace(".sql", "", $f);
+      }, listFile(getSystemTableFolder($directory)));
+
+      return $settings;
+    }, getSystemDirectories());
   }
 
   function listDatabases() {
     return array_filter(array_map(function ($db) {
       return $db["Database"];
     }, query("SHOW DATABASES")), function ($db) {
-      return $db != "information_schema" && $db != "performance_schema" && $db != "mysql" && $db != "sys";
+      return $db !== "information_schema" && $db !== "performance_schema" && $db !== "mysql" && $db !== "sys";
     });
   }
 
@@ -155,9 +164,7 @@
         for ($j = 0; $j < count($columnValues); $j++) {
           $rowValue = preg_replace_callback("/`.*?`/", function ($x) use ($headers, $row) {
             $lookup = preg_replace("/`/", "", $x[0]);
-            $headerIndex = array_search($lookup, $headers);
-
-            return $headerIndex ? $row[$headerIndex] : $x[0];
+            return in_array($lookup, $headers) ? $row[array_search($lookup, $headers)] : $x[0];
           }, urldecode($columnValues[$j]));
 
           array_push($rowValues, $rowValue);
@@ -325,5 +332,28 @@
     readfile($path);
     unlink($path);
     exit();
+  }
+
+  function getSystemSettingsFilePath($systemDirectory) {
+    return SYSTEMS_PATH . "$systemDirectory/config/settings.json";
+  }
+
+  function getSystemTableFolder($systemDirectory) {
+    return SYSTEMS_PATH . "$systemDirectory/config/tables";
+  }
+
+  function getSystemDirectories() {
+    return array_filter(listDirectoryNames(SYSTEMS_PATH), function ($s) {
+      return file_exists(getSystemSettingsFilePath($s));
+    });
+  }
+
+  function getColumnString($column) {
+    $field = $column["field"];
+    $type = $column["type"];
+    $length = !empty($column["length"]) ? "(" . $column["length"] . ")" : "";
+    $extra = !empty($column["extra"]) ? " " . $column["extra"] : "";
+
+    return "$field $type$length$extra";
   }
 ?>

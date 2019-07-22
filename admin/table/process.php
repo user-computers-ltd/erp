@@ -17,13 +17,17 @@
   $count = isset($_POST["count"]) ? (int) $_POST["count"] : 100;
   $pageNo = $offset / $count;
 
+  $systems = listSystems();
   $databaseFound = in_array($database, listDatabases());
   $tableFound = $databaseFound && in_array($table, listTableNames($database));
 
   if ($databaseFound && $tableFound) {
+    $system = array_filter($systems, function ($s) use ($database) { return $s["name"] === $database; })[0];
+    $isSystemDatabase = isset($system);
+    $isSystemTable = $isSystemDatabase && in_array($table, $system["tables"]);
+
     $columns = listColumns($database, $table);
-    $isSystemDatabase = in_array($database, listSystemNames());
-    $isSystemTable = in_array($table, listSystemTables($database));
+    $columnNames = str_replace("\"", "'", json_encode(array_map(function ($c) { return $c["field"]; }, $columns)));
 
     try {
       selectDatabase($database);
@@ -42,7 +46,7 @@
   }
 
   $breadcrumbs = array(
-    array("url" => BASE_URL, "label" => "Systems"),
+    array("url" => BASE_URL, "label" => "Main"),
     array("url" => ADMIN_URL, "label" => "Admin"),
     array("url" => ADMIN_DATABASES_URL, "label" => "Databases"),
     array("url" => ADMIN_DATABASE_URL . "?database=$database", "label" => $database)

@@ -33,10 +33,10 @@
                     <span class="tooltip-text">Restart `<?php echo $table; ?>` from system settings</span>
                   </div>
                 <?php endif ?>
-                <div class="image-button clear-import-image tooltip" onclick="clearImportTable('<?php echo $table; ?>', <?php echo $columns; ?>)">
+                <div class="image-button clear-import-image tooltip" onclick="clearImportTable('<?php echo $table; ?>', <?php echo $columnNames; ?>)">
                   <span class="tooltip-text">Remove data & import CSV to `<?php echo $table; ?>`</span>
                 </div>
-                <div class="image-button import-image tooltip" onclick="importTable('<?php echo $table; ?>', <?php echo $columns; ?>)">
+                <div class="image-button import-image tooltip" onclick="importTable('<?php echo $table; ?>', <?php echo $columnNames; ?>)">
                   <span class="tooltip-text">Import CSV to `<?php echo $table; ?>`</span>
                 </div>
                 <div class="image-button export-image tooltip" onclick="exportTable('<?php echo $table; ?>')">

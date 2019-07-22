@@ -10,9 +10,13 @@
     width: 100%;
   }
 
-  .prompt-form .prompt-fields-container td > * {
+  .prompt-form .prompt-fields-container td label {
+    margin-right: 10px;
+  }
+
+  .prompt-form .prompt-fields-container td input {
     display: block;
-    margin: 10px 0px;
+    margin: 5px 0px;
     padding: 10px;
     width: 100%;
     font-size: 13px;
@@ -48,12 +52,15 @@
     var fieldsContainerHTML = "";
 
     for (var i = 0; i < fields.length; i++) {
-      var label = fields[i].label;
+      var field = fields[i];
+      var label = field.label;
+      var fieldHTML = generatePromptFieldHTML(field);
 
       fieldsContainerHTML += "<tr>"
         + (label
-          ? "<td>" + (label ? label + ":" : "") + "</td><td>" + toHTMLString(fields[i]) + "</td>"
-          : "<td colspan=\"2\">" + toHTMLString(fields[i]) + "</td>"
+          ? "<td><label>" + (label ? label + ":" : "") + "</label></td>"
+          + "<td>" + fieldHTML + "</td>"
+          : "<td colspan=\"2\">" + fieldHTML + "</td>"
         )
       + "</tr>";
     }
@@ -71,5 +78,63 @@
     });
 
     showDialog({ content, onCancel });
+  }
+
+  function generatePromptFieldHTML(field) {
+    var htmlString = "";
+
+    switch (field.element) {
+      case "input":
+        htmlString +=
+          "<input " +
+          (field.type ? 'type="' + field.type + '" ' : "") +
+          (field.name ? 'name="' + field.name + '" ' : "") +
+          (field.value ? 'value="' + field.value + '" ' : "") +
+          (field.placeholder ? 'placeholder="' + field.placeholder + '"' : "") +
+          (field.readonly ? "readonly " : "") +
+          (field.required ? "required " : "") +
+          "/>";
+        break;
+      case "select":
+        htmlString +=
+          "<select " +
+          (field.name ? 'name="' + field.name + '" ' : "") +
+          (field.value ? 'value="' + field.value + '" ' : "") +
+          (field.readonly ? "readonly " : "") +
+          (field.required ? "required " : "") +
+          "/>";
+
+        if (field.options) {
+          for (var j = 0; j < field.options.length; j++) {
+            var option = field.options[j];
+            htmlString +=
+              "<option " +
+              (option.value ? 'value="' + option.value + '" ' : "") +
+              (option.value === field.value ? "selected " : "") +
+              (option.hidden ? "hidden " : "") +
+              (option.disabled ? "disabled " : "") +
+              ">" +
+              option.value +
+              "</option>";
+          }
+        }
+
+        htmlString += "</select>";
+        break;
+      case "textarea":
+        htmlString +=
+          "<textarea " +
+          (field.name ? 'name="' + field.name + '" ' : "") +
+          (field.readonly ? "readonly " : "") +
+          (field.required ? "required " : "") +
+          "/>" +
+          field.value +
+          "</textarea>";
+        break;
+      default:
+        break;
+    }
+
+    return htmlString;
   }
 </script>

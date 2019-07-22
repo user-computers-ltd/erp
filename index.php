@@ -1,10 +1,9 @@
 <?php
   define("ROOT_PATH", "");
 
-  include_once ROOT_PATH . "includes/php/config.php";
-  include_once ROOT_PATH . "includes/php/utils.php";
+  include_once ROOT_PATH . "admin/includes/php/utils.php";
 
-  $systems = listDirectory("systems");
+  $systems = array_map(function ($s) { return $s["name"]; }, listSystems());
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +19,7 @@
 
       .top-link {
         font-weight: bold;
+        line-height: 28px;
       }
 
       .system-list {
@@ -55,15 +55,13 @@
     <div class="page-wrapper">
       <div class="page">
         <a href="<?php echo BASE_URL; ?>admin" class="top-link">Admin</a>
-        <h2>Systems</h2>
           <div class="system-list">
           <?php if (count($systems) > 0) : ?>
-            <?php
-              foreach ($systems as $system) {
-                $name = $system["name"];
-                echo "<a href=\"" . BASE_URL . "systems/$name\" class=\"system-link\"><span>$name</span></a>";
-              }
-            ?>
+            <?php foreach ($systems as &$system) : ?>
+              <a href="<?php echo BASE_URL . "systems/$system\""; ?>" class="system-link">
+                <span><?php echo $system; ?></span>
+              </a>
+            <?php endforeach ?>
           <?php else : ?>
             <div class="no-results">No systems built yet</div>
           <?php endif ?>

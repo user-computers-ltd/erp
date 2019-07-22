@@ -8,7 +8,7 @@
   define("ADMIN_URL", BASE_URL . "admin/");
 
   $breadcrumbs = array(
-    array("url" => BASE_URL, "label" => "Systems")
+    array("url" => BASE_URL, "label" => "Main")
   );
 ?>
 
@@ -19,6 +19,7 @@
     <style>
       .system-list {
         margin: 40px 0px;
+        text-align: center;
       }
 
       .system-list .system-link {
@@ -52,6 +53,7 @@
         <h2>Administrator</h2>
         <div class="system-list">
           <a href="<?php echo ADMIN_URL . "databases"; ?>" class="system-link"><span>Databases</span></a>
+          <a href="<?php echo ADMIN_URL . "systems"; ?>" class="system-link"><span>Systems</span></a>
         </div>
       </div>
     </div>
