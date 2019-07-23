@@ -5,13 +5,34 @@
   define("SYSTEMS_PATH", ROOT_PATH . "systems/");
 
   function listSystems() {
-    return array_map(function ($directory) {
+    $databases = listDatabases();
+    rsort($databases);
+
+    return array_map(function ($directory) use ($databases) {
       $settings = json_decode(file_get_contents(getSystemSettingsFilePath($directory)), true);
 
       $settings["name"] = $directory;
-      $settings["backups"] = array_filter(listDatabases(), function ($d) use ($directory) {
+      $settings["backups"] = array_map(function ($db) use ($directory, $databases) {
+        $timeString = str_replace($directory . "_backup_", "", $db);
+        $year = substr($timeString, 0, 4);
+        $month = substr($timeString, 4, 2);
+        $date = substr($timeString, 6, 2);
+        $hour = substr($timeString, 8, 2);
+        $minute = substr($timeString, 10, 2);
+        $second = substr($timeString, 12, 2);
+
+        return array(
+          "name" => $db,
+          "date" => "$year-$month-$date",
+          "time" => "$hour:$minute:$second",
+          "datetime" => "$year-$month-$date $hour:$minute:$second"
+        );
+      }, array_filter($databases, function ($d) use ($directory) {
         return preg_match("/" . $directory . "_backup_[0-9]{14}/", $d);
-      });
+      }));
+      if (count($settings["backups"]) > 0) {
+        $settings["latest-backup-datetime"] = array_pop(array_reverse($settings["backups"]))["datetime"];
+      }
       $settings["tables"] = array_map(function ($f) {
         return str_replace(".sql", "", $f);
       }, listFile(getSystemTableFolder($directory)));
@@ -112,6 +133,41 @@
       array_push($queries, $contents);
 
       fclose($handle);
+    }
+
+    execute($queries);
+  }
+
+  function backupDatabase($database) {
+    copyDatabase($database . "_backup_" . date("YmdHis"), $database);
+  }
+
+  function scheduleBackupDatabase($database) {
+    $system = array_filter(listSystems(), function ($s) use ($database) { return $s["name"] === $database; })[0];
+    $variance = $system["backup-cron-variance"];
+    $latestBackup = array_pop(array_reverse($system["backups"]));
+    $earliestBackupTimeString = $latestBackup["datetime"]
+      . (isset($variance["day"]) ? " + " . $variance["day"] . " days" : "")
+      . (isset($variance["hour"]) ? " + " . $variance["hour"] . " hours" : "")
+      . (isset($variance["minute"]) ? " + " . $variance["minute"] . " minutes" : "")
+      . (isset($variance["second"]) ? " + " . $variance["second"] . " seconds" : "");
+
+    if (strtotime($earliestBackupTimeString) <= strtotime("now")) {
+      copyDatabase($database . "_backup_" . date("YmdHis"), $database);
+    }
+  }
+
+  function recoverDatabase($database, $backup) {
+    $queries = [];
+
+    array_push($queries, "DROP DATABASE `$database`");
+    array_push($queries, "CREATE DATABASE `$database`");
+
+    $tables = array_map(function ($i) { return $i["name"]; }, listTables($backup));
+
+    foreach ($tables as $table) {
+      array_push($queries, "CREATE TABLE `$database`.`$table` LIKE `$backup`.`$table`");
+      array_push($queries, "INSERT `$database`.`$table` SELECT * FROM `$backup`.`$table`");
     }
 
     execute($queries);

@@ -45,6 +45,30 @@
         }
         break;
 
+      case "backup-database":
+        if ($_POST["database"]) {
+          backupDatabase($_POST["database"]);
+        } else {
+          throwError("missing database name");
+        }
+        break;
+
+      case "schedule-backup-database":
+        if ($_POST["database"]) {
+          scheduleBackupDatabase($_POST["database"]);
+        } else {
+          throwError("missing database name");
+        }
+        break;
+
+      case "recover-database":
+        if ($_POST["database"] && $_POST["backup"]) {
+          recoverDatabase($_POST["database"], $_POST["backup"]);
+        } else {
+          throwError("missing database or backup name");
+        }
+        break;
+
       case "query-database":
         if ($_POST["database"] && $_POST["sql"]) {
           selectDatabase($_POST["database"]);

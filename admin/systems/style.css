@@ -1,0 +1,23 @@
+.systems-table {
+  margin: 20px 0px;
+  padding: 0px;
+  width: 100%;
+}
+
+.systems-table tr td {
+  padding: 5px;
+  border-top: 1px solid #c0c0c0;
+}
+
+.systems-table tr:first-child td {
+  border-top: 0px;
+}
+
+.systems-table tr td.system-detail {
+  font-size: 13px;
+  text-align: right;
+}
+
+.systems-table tr td.system-buttons {
+  text-align: right;
+}

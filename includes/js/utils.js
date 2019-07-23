@@ -349,6 +349,9 @@ function sortTable(table, columnIndex) {
   }
 }
 
+// Setup local time on later library.
+later.date.localTime();
+
 window.addEventListener("load", function() {
   // Setup sortable tables.
   var tables = document.querySelectorAll("table.sortable");

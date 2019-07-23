@@ -1,0 +1,27 @@
+.system-info .system-next-backup {
+  display: inline-block;
+  line-height: 30px;
+}
+
+.system-table {
+  margin-bottom: 20px;
+  padding: 0px;
+  width: 100%;
+}
+
+.system-table tr td {
+  padding: 5px;
+}
+
+.system-table tr:first-child td {
+  border-top: 1px solid #c0c0c0;
+}
+
+.system-table tr td.system-detail {
+  font-size: 13px;
+  text-align: right;
+}
+
+.system-table tr td.system-buttons {
+  text-align: right;
+}
