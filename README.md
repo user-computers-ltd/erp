@@ -22,7 +22,7 @@ After placing this framework into your apache server folder, you will need to cr
 You will need to provide the following content for the framework to pick these configurations and operate properly:
 
 ```php
-define("ROOT_URL", "<your apache server folder e.g.: 'http://localhost/'>");
+define("ROOT_URL", "<your apache server root URL e.g.: 'http://localhost/'>");
 
 define("MYSQL_HOST", "<your MySQL host e.g.: '127.0.0.1>'");
 define("MYSQL_USER", "<your MySQL username>");
@@ -33,7 +33,7 @@ define("TEMP_DIRECTORY", "<your apache server's temporary folder e.g.: '/tmp/'>"
 date_default_timezone_set("your preferred timezone e.g.: 'Asia/Taipei'");
 ```
 
-At this stage, you should be able to access the main page (`<your apache server folder>/erp`) and the administrator page (`<your apache server folder>/admin`)
+At this stage, you should be able to access the main page (`<your apache server root URL>/erp`) and the administrator page (`<your apache server root URL>/erp/admin`)
 
 ## Create a new system
 
