@@ -26,7 +26,7 @@ function recoverFromBackup(database, time) {
         reloadPage: true,
         data: {
           action: "recover-database",
-          database: system["name"],
+          database: systemName,
           backup: database
         }
       });
@@ -64,9 +64,6 @@ function exportFromBackup(database, time) {
   });
 }
 
-var backupCron = system["backup-cron"];
-var cronVariance = system["backup-cron-variance"];
-
 if (backupCron) {
   var variance = 0;
 
@@ -88,12 +85,13 @@ if (backupCron) {
     }
   }
 
-  var lastBackup = new Date(system["latest-backup-datetime"]);
-  var nextBackups = later.schedule(later.parse.cron(backupCron)).next(2);
-  var nextBackup =
-    lastBackup && nextBackups[0] - lastBackup <= variance
-      ? nextBackups[1]
-      : nextBackups[0];
+  var lastBackup = latestBackupTime && new Date(latestBackupTime);
+  var earliestBackupAvaiable =
+    lastBackup && new Date(lastBackup.getTime() + variance);
+  var nextBackup = later
+    .schedule(later.parse.cron(backupCron))
+    .next(1, earliestBackupAvaiable);
+  console.log(nextBackup);
 
   if (nextBackup) {
     var countdownTimer = setInterval(function() {
@@ -109,7 +107,7 @@ if (backupCron) {
         var seconds = Math.floor(diff / 1000);
 
         nextBackupElement.innerHTML = `Backup scheduled in ${
-          days > 0 ? days + "d" : ""
+          days > 1 ? days + " days and " : days > 0 ? days + " day and " : ""
         } ${doubleDigit(hours)}:${doubleDigit(minutes)}:${doubleDigit(
           seconds
         )}`;
@@ -118,11 +116,11 @@ if (backupCron) {
         clearInterval(countdownTimer);
         sendPostRequest({
           url: apiURL,
-          loadingMessage: "Backing up `" + system["name"] + "`...",
+          loadingMessage: "Backing up `" + systemName + "`...",
           reloadPage: true,
           data: {
             action: "schedule-backup-database",
-            database: system["name"]
+            database: systemName
           }
         });
       }

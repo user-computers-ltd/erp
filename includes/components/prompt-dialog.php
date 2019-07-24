@@ -17,10 +17,7 @@
   .prompt-form .prompt-fields-container td input {
     display: block;
     margin: 5px 0px;
-    padding: 10px;
     width: 100%;
-    font-size: 13px;
-    box-sizing: border-box;
   }
 
   .prompt-form .submit-button {

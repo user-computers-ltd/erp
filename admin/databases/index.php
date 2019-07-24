@@ -24,7 +24,7 @@
           </colgroup>
           <?php foreach ($nonExistSystemDatabases as &$database) : ?>
             <tr>
-              <td><a href="<?php echo ADMIN_DATABASE_URL . "?database=$database"; ?>"><?php echo $database; ?></a></td>
+              <td><a href="<?php echo ADMIN_URL . "database?database=$database"; ?>"><?php echo $database; ?></a></td>
               <td></td>
               <td class="database-buttons">
                 <div class="image-button restart-image tooltip" onclick="restartDatabase('<?php echo $database; ?>')">
@@ -35,7 +35,7 @@
           <?php endforeach ?>
           <?php foreach ($databases as &$database) : ?>
             <tr>
-              <td><a href="<?php echo ADMIN_DATABASE_URL . "?database=$database"; ?>"><?php echo $database; ?></a></td>
+              <td><a href="<?php echo ADMIN_URL . "database?database=$database"; ?>"><?php echo $database; ?></a></td>
               <td class="database-count">
                 <?php echo count($databaseMap[$database]); ?> table<?php echo count($databaseMap[$database]) > 1 ? "s" : ""; ?>
               </td>

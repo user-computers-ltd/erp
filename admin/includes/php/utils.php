@@ -36,9 +36,20 @@
       $settings["tables"] = array_map(function ($f) {
         return str_replace(".sql", "", $f);
       }, listFile(getSystemTableFolder($directory)));
+      $settings["settings-perm"] = getFilePermission(getSystemSettingsFilePath($directory));
+      $settings["settings-editable"] = substr(getFilePermission(getSystemSettingsFilePath($directory)), -1) >= 6;
 
       return $settings;
     }, getSystemDirectories());
+  }
+
+  function updateSystemSettings($system, $settings) {
+    $path = getSystemSettingsFilePath($system);
+
+    $file = fopen($path, "w");
+
+    fwrite($file, json_encode($settings));
+    fclose($file);
   }
 
   function listDatabases() {

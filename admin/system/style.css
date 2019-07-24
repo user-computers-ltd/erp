@@ -1,6 +1,44 @@
+.system-settings {
+  margin: 20px 0px;
+}
+
+.system-settings table {
+  width: 100%;
+  max-width: 400px;
+}
+
+.system-settings table .system-settings-label {
+  padding: 10px 0px;
+  font-weight: bold;
+}
+
+.system-settings td input {
+  display: block;
+  margin: 5px 0px;
+  width: 100%;
+}
+
+.system-settings td input[name="backup-cron"] {
+  font-family: Courier New, Courier;
+  font-weight: bold;
+}
+
+.system-settings .system-settings-disabled {
+  margin: 10px 0px;
+  color: #aa0000;
+}
+
+.system-info .system-backup {
+  margin-right: 10px;
+}
+
+.system-info .system-backup,
 .system-info .system-next-backup {
   display: inline-block;
-  line-height: 30px;
+}
+
+.system-info .system-next-backup {
+  padding: 8px 0px;
 }
 
 .system-table {
@@ -10,11 +48,13 @@
 }
 
 .system-table tr td {
-  padding: 5px;
+  padding: 5px 0px;
+  border-top: 1px solid #c0c0c0;
 }
 
-.system-table tr:first-child td {
-  border-top: 1px solid #c0c0c0;
+.system-table tr:last-child td {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #c0c0c0;
 }
 
 .system-table tr td.system-detail {

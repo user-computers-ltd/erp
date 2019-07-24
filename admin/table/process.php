@@ -5,11 +5,6 @@
   include_once ROOT_PATH . "includes/php/config.php";
   include_once ADMIN_PATH . "includes/php/utils.php";
 
-  define("ADMIN_URL", BASE_URL . "admin/");
-  define("ADMIN_DATABASES_URL", ADMIN_URL . "databases/");
-  define("ADMIN_DATABASE_URL", ADMIN_URL . "database/");
-  define("ADMIN_TABLE_URL", ADMIN_URL . "table/");
-
   $database = $_GET["database"];
   $table = $_GET["table"];
   $sql = assigned($_POST["sql"]) ? $_POST["sql"] : "SELECT * FROM `$table`";
@@ -47,8 +42,8 @@
 
   $breadcrumbs = array(
     array("url" => BASE_URL, "label" => "Main"),
-    array("url" => ADMIN_URL, "label" => "Admin"),
-    array("url" => ADMIN_DATABASES_URL, "label" => "Databases"),
-    array("url" => ADMIN_DATABASE_URL . "?database=$database", "label" => $database)
+    array("url" => BASE_URL . "admin/", "label" => "Admin"),
+    array("url" => BASE_URL . "admin/databases/", "label" => "Databases"),
+    array("url" => BASE_URL . "admin/database?database=$database", "label" => $database)
   );
 ?>

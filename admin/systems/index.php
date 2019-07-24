@@ -28,7 +28,7 @@
               $time = $system["latest-backup-datetime"];
             ?>
             <tr>
-              <td><a href="<?php echo ADMIN_SYSTEM_URL . "?system=$name"; ?>"><?php echo $name; ?></a></td>
+              <td><a href="<?php echo ADMIN_URL . "system?system=$name"; ?>"><?php echo $name; ?></a></td>
               <td class="system-detail">
                 <?php
                   if (count($backups) > 0 && isset($time)) {

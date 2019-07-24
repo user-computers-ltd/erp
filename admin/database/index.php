@@ -29,7 +29,7 @@
             </colgroup>
             <?php foreach ($nonExistSystemTables as &$table) : ?>
               <tr>
-                <td><a href="<?php echo ADMIN_TABLE_URL . "?database=$database&table=$table"; ?>"><?php echo $table; ?></a></td>
+                <td><a href="<?php echo ADMIN_URL . "table?database=$database&table=$table"; ?>"><?php echo $table; ?></a></td>
                 <td></td>
                 <td class="table-buttons">
                   <div class="image-button restart-image tooltip" onclick="restartTable('<?php echo $table; ?>')">
@@ -46,7 +46,7 @@
                 $isSystemTable = in_array($name, $systemTables);
               ?>
               <tr>
-                <td><a href="<?php echo ADMIN_TABLE_URL . "?database=$database&table=$name"; ?>"><?php echo $name; ?></a></td>
+                <td><a href="<?php echo ADMIN_URL . "table?database=$database&table=$name"; ?>"><?php echo $name; ?></a></td>
                 <td class="table-count"><?php echo $count; ?> row<?php echo $count > 1 ? "s" : ""; ?></td>
                 <td class="table-buttons">
                   <?php if ($isSystemTable) : ?>

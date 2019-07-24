@@ -31,10 +31,21 @@ button,
   transition: transform 0.1s, box-shadow 0.1s;
 }
 
+button[disabled=""],
+.button.disabled {
+  color: #c0c0c0;
+}
+
 button:active,
 .button:active {
   transform: translateY(2px);
   box-shadow: 0px 1px #c0c0c0;
+}
+
+button[disabled=""]:active,
+.button.disabled:active {
+  transform: translateY(0px);
+  box-shadow: 0px 3px #c0c0c0;
 }
 
 input,
@@ -55,6 +66,12 @@ select[readonly=""] {
 input[hidden=""],
 select[hidden=""] {
   display: none;
+}
+
+input {
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 13px;
 }
 
 table {

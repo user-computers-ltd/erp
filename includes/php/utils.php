@@ -196,4 +196,8 @@
       </form>
     ";
   }
+
+  function getFilePermission($filepath) {
+    return substr(sprintf("%o", fileperms($filepath)), -4);
+  }
 ?>

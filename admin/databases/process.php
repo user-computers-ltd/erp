@@ -5,9 +5,6 @@
   include_once ROOT_PATH . "includes/php/config.php";
   include_once ADMIN_PATH . "includes/php/utils.php";
 
-  define("ADMIN_URL", BASE_URL . "admin/");
-  define("ADMIN_DATABASE_URL", ADMIN_URL . "database/");
-
   $databases = listDatabases();
   $systemDatabases = array_map(function ($s) { return $s["name"]; }, listSystems());
   $nonExistSystemDatabases = array_filter($systemDatabases, function ($i) use ($databases) {
@@ -26,6 +23,6 @@
 
   $breadcrumbs = array(
     array("url" => BASE_URL, "label" => "Main"),
-    array("url" => ADMIN_URL, "label" => "Admin")
+    array("url" => BASE_URL . "admin/", "label" => "Admin")
   );
 ?>
